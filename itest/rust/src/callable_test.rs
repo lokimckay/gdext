@@ -74,8 +74,30 @@ fn callable_object_method() {
     assert_eq!(Callable::invalid().method_name(), None);
 }
 
-#[itest]
+// FIXME: UB when calling this.
+#[itest(focus)]
 fn callable_call() {
+    let obj = Gd::<CallableTestObj>::new_default();
+    let callable = obj.callable("foo");
+
+    assert_eq!(obj.bind().value, 0);
+    callable.as_inner().call(&[10.to_variant()]);
+    assert_eq!(obj.bind().value, 10);
+    callable
+        .as_inner()
+        .call(&[20.to_variant(), 30.to_variant()]);
+    assert_eq!(obj.bind().value, 20);
+
+    assert_eq!(
+        callable.as_inner().call(&["string".to_variant()]),
+        Variant::nil()
+    );
+
+    assert_eq!(Callable::invalid().as_inner().call(&[1.to_variant()]), Variant::nil());
+}
+
+#[itest]
+fn callable_callv() {
     let obj = Gd::<CallableTestObj>::new_default();
     let callable = obj.callable("foo");
 
