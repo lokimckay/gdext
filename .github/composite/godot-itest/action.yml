@@ -83,5 +83,5 @@ runs:
         with-llvm: ${{ inputs.with-llvm }}
 
     - name: "Read Godot version from Rust"
-      run: cargo run -p micromac
+      run: cargo build -p godot-ffi --features godot-bindings/custom-godot
       shell: bash
