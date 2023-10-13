@@ -24,6 +24,7 @@ runs:
     - name: "Store variable to Godot binary"
       run: |
         runnerDir=$(echo "${{ runner.temp }}" | sed "s!\\\\!/!")
+        rm -rf $runnerDir/godot_bin || true   # previous runs on macOS tests
         echo "RUNNER_DIR=$runnerDir" >> $GITHUB_ENV
         echo "GODOT4_BIN=$runnerDir/godot_bin/${{ inputs.godot-binary }}" >> $GITHUB_ENV
       shell: bash
