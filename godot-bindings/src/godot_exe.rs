@@ -110,6 +110,10 @@ pub(crate) fn read_godot_version(godot_bin: &Path) -> GodotVersion {
             )
         });
 
+    if !output.status.success() {
+        panic!("failed to read Godot version from {}", godot_bin.display());
+    }
+
     let output = String::from_utf8(output.stdout).expect("convert Godot version to UTF-8");
     println!("Godot version: {output}");
 
