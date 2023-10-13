@@ -9,9 +9,6 @@ name: Full CI
 on:
   merge_group:
   push:
-    branches:
-      - staging
-      - trying
 
 env:
   GDEXT_FEATURES: ''
