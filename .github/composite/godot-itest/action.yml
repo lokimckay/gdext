@@ -76,11 +76,11 @@ runs:
         echo "GODOT_BUILT_FROM=_Built from [\`$godotVer\`](https://github.com/godotengine/godot/commit/$gitSha)._" >> $GITHUB_ENV
       shell: bash
 
-#    - name: "Install Rust"
-#      uses: ./.github/composite/rust
-#      with:
-#        rust: ${{ inputs.rust-toolchain }}
-#        with-llvm: ${{ inputs.with-llvm }}
+    - name: "Install Rust"
+      uses: ./.github/composite/rust
+      with:
+        rust: ${{ inputs.rust-toolchain }}
+        with-llvm: ${{ inputs.with-llvm }}
 
     - name: "Read Godot version from Rust"
       run: cargo run -p micromac
