@@ -8,6 +8,9 @@
 
 // use std::path::Path;
 
+use std::env;
+use std::process::Command;
+
 fn main() {
     // let mut watch = godot_bindings::StopWatch::start();
 
@@ -26,7 +29,26 @@ fn main() {
     //godot_codegen::generate_sys_files(gen_path, &h_path, &mut watch);
 
     // watch.write_stats_to(&gen_path.join("ffi-stats.txt"));
-    println!("cargo:rerun-if-changed=build.rs");
+    //println!("cargo:rerun-if-changed=build.rs");
 
-    godot_bindings::emit_godot_version_cfg();
+    // godot_bindings::emit_godot_version_cfg();
+
+    let godot_bin = env::var("GODOT4_BIN").expect("env var 'GODOT4_BIN' not found");
+
+    let output = Command::new(godot_bin.clone())
+        .arg("--version")
+        .output()
+        .unwrap_or_else(|_| {
+            panic!(
+                "failed to invoke Godot executable '{}'",
+                godot_bin
+            )
+        });
+
+    if !output.status.success() {
+        panic!("failed to read Godot version from {}", godot_bin);
+    }
+
+    let output = String::from_utf8(output.stdout).expect("convert Godot version to UTF-8");
+    println!("Godot version: {output}");
 }
