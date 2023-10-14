@@ -81,7 +81,7 @@ runs:
       with:
         rust: '1.70'
         # true if macOs
-        with-llvm: ${{ runner.os == 'macOS' }}
+        with-llvm: false # ${{ runner.os == 'macOS' }}
 
     - name: "Read Godot version from Rust"
       run: cargo build -p godot-ffi -vv
