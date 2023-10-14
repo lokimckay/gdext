@@ -21,24 +21,24 @@ runs:
         echo "LLVM_INSTALL_DIR=$installDir" >> $GITHUB_ENV
       shell: bash
 
-    - name: "Cache LLVM and clang"
-      id: cache-llvm
-      # Note: conditionals not yet supported; see https://github.com/actions/runner/issues/834
-      # if: inputs.llvm == 'true'
-      uses: actions/cache@v3
-      with:
-#        path: |
-#          C:/Program Files/LLVM
-#          ./llvm
-        path: ${{ env.LLVM_INSTALL_DIR }}
-        key: llvm-10.0
+#    - name: "Cache LLVM and clang"
+#      id: cache-llvm
+#      # Note: conditionals not yet supported; see https://github.com/actions/runner/issues/834
+#      # if: inputs.llvm == 'true'
+#      uses: actions/cache@v3
+#      with:
+##        path: |
+##          C:/Program Files/LLVM
+##          ./llvm
+#        path: ${{ env.LLVM_INSTALL_DIR }}
+#        key: llvm-10.0
 
     - uses: KyleMayes/install-llvm-action@v1
       # if: inputs.llvm == 'true'
       with:
         version: "17.0.2"
         directory: ${{ env.LLVM_INSTALL_DIR }}
-        cached: ${{ steps.cache-llvm.outputs.cache-hit }}
+#        cached: ${{ steps.cache-llvm.outputs.cache-hit }}
 
     - name: "Print LLVM dir"
       #run: ls -ls $LLVM_DIR/lib
