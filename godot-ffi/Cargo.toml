@@ -8,10 +8,9 @@ keywords = ["gamedev", "godot", "engine", "ffi"]
 categories = ["game-engines", "graphics"]
 
 [features]
-custom-godot = ["godot-bindings/custom-godot"]
+custom-godot = []
 trace = []
 
 [dependencies]
 
 [build-dependencies]
-godot-bindings = { path = "../godot-bindings" }
