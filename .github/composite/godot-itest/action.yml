@@ -76,6 +76,13 @@ runs:
         echo "GODOT_BUILT_FROM=_Built from [\`$godotVer\`](https://github.com/godotengine/godot/commit/$gitSha)._" >> $GITHUB_ENV
       shell: bash
 
+    - name: "Install Rust"
+      uses: ./.github/composite/rust
+      with:
+        rust: '1.70'
+        # true if macOs
+        with-llvm: ${{ runner.os == 'macOS' }}
+
     - name: "Read Godot version from Rust"
       run: cargo build -p godot-ffi -vv
 #      run: cargo build -p godot-ffi --features godot-bindings/custom-godot -vv
