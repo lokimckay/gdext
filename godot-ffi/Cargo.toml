@@ -9,13 +9,9 @@ categories = ["game-engines", "graphics"]
 
 [features]
 custom-godot = ["godot-bindings/custom-godot"]
-codegen-fmt = ["godot-codegen/codegen-fmt"]
-experimental-godot-api = ["godot-codegen/experimental-godot-api"]
 trace = []
 
 [dependencies]
-paste = "1"
 
 [build-dependencies]
 godot-bindings = { path = "../godot-bindings" }
-godot-codegen = { path = "../godot-codegen" }
