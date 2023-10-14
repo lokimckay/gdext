@@ -36,7 +36,7 @@ runs:
     - uses: KyleMayes/install-llvm-action@v1
       # if: inputs.llvm == 'true'
       with:
-        version: "16.0.4"
+        version: "15.0.7"
         directory: ${{ env.LLVM_INSTALL_DIR }}
 #        cached: ${{ steps.cache-llvm.outputs.cache-hit }}
 

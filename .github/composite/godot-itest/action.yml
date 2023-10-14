@@ -79,7 +79,7 @@ runs:
     - name: "Install Rust"
       uses: ./.github/composite/rust
       with:
-        rust: '1.70'
+        rust: 'stable'
         # true if macOs
         with-llvm: ${{ runner.os == 'macOS' }}
 
