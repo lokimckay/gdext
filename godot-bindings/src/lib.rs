@@ -51,20 +51,20 @@ mod custom {
 
     pub(crate) mod godot_exe;
     pub(crate) mod godot_version;
-    pub(crate) mod header_gen;
+    // pub(crate) mod header_gen;
 
     pub fn load_gdextension_json(watch: &mut StopWatch) -> String {
         godot_exe::load_gdextension_json(watch)
     }
 
-    pub fn write_gdextension_headers(h_path: &Path, rs_path: &Path, watch: &mut StopWatch) {
-        godot_exe::write_gdextension_headers(h_path, rs_path, false, watch);
-    }
-
-    #[cfg(feature = "custom-godot-extheader")]
-    pub fn write_gdextension_headers_from_c(h_path: &Path, rs_path: &Path, watch: &mut StopWatch) {
-        godot_exe::write_gdextension_headers(h_path, rs_path, true, watch);
-    }
+    // pub fn write_gdextension_headers(h_path: &Path, rs_path: &Path, watch: &mut StopWatch) {
+    //     godot_exe::write_gdextension_headers(h_path, rs_path, false, watch);
+    // }
+    //
+    // #[cfg(feature = "custom-godot-extheader")]
+    // pub fn write_gdextension_headers_from_c(h_path: &Path, rs_path: &Path, watch: &mut StopWatch) {
+    //     godot_exe::write_gdextension_headers(h_path, rs_path, true, watch);
+    // }
 
     pub(crate) fn get_godot_version() -> GodotVersion {
         godot_exe::read_godot_version(&godot_exe::locate_godot_binary())

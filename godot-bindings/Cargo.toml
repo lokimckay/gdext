@@ -14,7 +14,7 @@ categories = ["game-engines", "graphics"]
 [features]
 default = ["prebuilt-godot"]
 prebuilt-godot = ["dep:godot4-prebuilt"]
-custom-godot = ["dep:bindgen", "dep:regex", "dep:which"]
+custom-godot = ["dep:regex", "dep:which"]
 custom-godot-extheader = []
 
 [dependencies]
