@@ -14,7 +14,8 @@ pub use crate::registry::{callbacks, ClassPlugin, ErasedRegisterFn, PluginItem};
 pub use crate::storage::{as_storage, Storage};
 pub use sys::out;
 
-use crate::builtin::meta::{CallContext, CallError};
+use crate::builtin::error::CallError;
+use crate::builtin::meta::CallContext;
 use crate::{log, sys};
 
 // ----------------------------------------------------------------------------------------------------------------------------------------------

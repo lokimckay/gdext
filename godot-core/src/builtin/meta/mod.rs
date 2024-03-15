@@ -7,13 +7,11 @@
 
 pub mod registration;
 
-mod call_error;
 mod class_name;
 mod godot_convert;
 mod return_marshal;
 mod signature;
 
-pub use call_error::*;
 pub use class_name::*;
 pub use godot_convert::*;
 #[doc(hidden)]

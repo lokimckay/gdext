@@ -597,7 +597,7 @@ impl FnReturn {
 
     pub fn call_result_decl(&self) -> TokenStream {
         let ret = self.type_tokens();
-        quote! { -> Result<#ret, crate::builtin::meta::CallError> }
+        quote! { -> Result<#ret, crate::builtin::error::CallError> }
     }
 }
 

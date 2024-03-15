@@ -148,7 +148,8 @@ struct Thing {
 impl You_forgot_the_attribute__godot_api for Thing {}
 
 impl INode for Thing {
-    fn process(&mut self) { // delta is missing
+    fn process(&mut self) {
+        // delta is missing
         todo!()
     }
 }

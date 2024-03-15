@@ -5,13 +5,14 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
+use crate::builtin::error::NotUniqueError;
 use std::error::Error;
 
 use crate::engine::global::Error as GodotError;
 use crate::gen::classes::FileAccess;
-use crate::obj::{Gd, NotUniqueError};
+use crate::obj::Gd;
 
-/// Error that can occur while using `gdext` IO utilities.
+/// Error that can occur while using gdext IO utilities, such as `GFile`.
 #[derive(Debug)]
 pub struct IoError {
     data: ErrorData,
@@ -85,7 +86,7 @@ impl IoError {
             });
         }
 
-        match NotUniqueError::check(file_access) {
+        match file_access.try_to_unique() {
             Ok(gd) => Ok(gd),
             Err(err) => Err(Self {
                 data: ErrorData::GFile(GFileError {

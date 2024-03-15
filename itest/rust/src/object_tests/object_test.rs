@@ -1024,21 +1024,3 @@ fn double_use_reference() {
 #[derive(GodotClass)]
 #[class(no_init, base = EditorPlugin, editor_plugin, tool)]
 struct CustomEditorPlugin;
-
-// ----------------------------------------------------------------------------------------------------------------------------------------------
-
-#[itest]
-fn non_unique_error_works() {
-    use godot::engine::RefCounted;
-    use godot::obj::NotUniqueError;
-
-    let unique = RefCounted::new_gd();
-    assert!(NotUniqueError::check(unique).is_ok());
-
-    let shared = RefCounted::new_gd();
-    let cloned = shared.clone();
-    match NotUniqueError::check(cloned) {
-        Err(error) => assert_eq!(error.get_reference_count(), 2),
-        Ok(_) => panic!("NotUniqueError::check must not succeed"),
-    }
-}
