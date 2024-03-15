@@ -39,7 +39,7 @@ use std::fmt;
 /// ```no_run
 /// use godot::prelude::*;
 /// use std::error::Error;
-/// # use godot_core::builtin::meta::CallError;
+/// # use godot_core::builtin::error::CallError;
 /// #[derive(GodotClass)]
 /// # #[class(init)]
 /// struct MyClass;

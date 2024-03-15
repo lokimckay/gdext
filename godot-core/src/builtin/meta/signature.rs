@@ -5,13 +5,18 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-use crate::builtin::meta::*;
+use crate::builtin::error::CallError;
+use crate::builtin::meta::{
+    into_ffi, try_from_ffi, ConvertError, FromGodot, GodotFfiVariant, GodotType,
+    MethodParamOrReturnInfo, PropertyInfo, PtrcallReturn, PtrcallReturnT, ToGodot,
+};
 use crate::builtin::Variant;
 use crate::obj::{GodotClass, InstanceId};
 use godot_ffi as sys;
-use std::fmt;
-use std::fmt::Debug;
+use godot_ffi::GodotFfi;
 use sys::{BuiltinMethodBind, ClassMethodBind, UtilityFunctionBind};
+
+use std::fmt;
 
 // TODO:
 // separate arguments and return values, so that a type can be used in function arguments even if it doesn't
@@ -140,9 +145,9 @@ macro_rules! impl_varcall_signature_for_tuple {
         #[allow(unused_variables)]
         impl<$R, $($Pn,)*> VarcallSignatureTuple for ($R, $($Pn,)*)
             where
-                $R: ToGodot + FromGodot + FromVariantIndirect + Debug,
+                $R: ToGodot + FromGodot + FromVariantIndirect + fmt::Debug,
                 $(
-                    $Pn: ToGodot + FromGodot + Debug,
+                    $Pn: ToGodot + FromGodot + fmt::Debug,
                 )*
         {
             const PARAM_COUNT: usize = $PARAM_COUNT;
@@ -332,8 +337,8 @@ macro_rules! impl_ptrcall_signature_for_tuple {
     ) => {
         #[allow(unused_variables)]
         impl<$R, $($Pn,)*> PtrcallSignatureTuple for ($R, $($Pn,)*)
-            where $R: ToGodot + FromGodot + Debug,
-               $( $Pn: ToGodot + FromGodot + Debug, )*
+            where $R: ToGodot + FromGodot + fmt::Debug,
+               $( $Pn: ToGodot + FromGodot + fmt::Debug, )*
         {
             type Params = ($($Pn,)*);
             type Ret = $R;

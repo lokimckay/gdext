@@ -5,7 +5,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-use godot::builtin::meta::{CallError, FromGodot, ToGodot};
+use godot::builtin::error::CallError;
+use godot::builtin::meta::{FromGodot, ToGodot};
 use godot::builtin::{StringName, Variant, Vector3};
 use godot::engine::{Node, Node3D, Object};
 use godot::obj::{InstanceId, NewAlloc};

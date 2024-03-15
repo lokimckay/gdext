@@ -70,6 +70,9 @@ pub use __prelude_reexport::*;
 /// Meta-information about variant types, properties and class names.
 pub mod meta;
 
+/// Error types.
+pub mod error;
+
 /// Math-related functions and traits like [`ApproxEq`][math::ApproxEq].
 pub mod math;
 
