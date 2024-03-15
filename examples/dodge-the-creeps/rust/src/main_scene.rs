@@ -135,3 +135,20 @@ impl INode for Main {
         self.death_sound = Some(self.base().get_node_as("DeathSound"));
     }
 }
+
+use godot::prelude::*;
+use godot::private::You_forgot_the_attribute__godot_api;
+
+#[derive(GodotClass)]
+#[class(init, tool, base=Node)]
+struct Thing {
+    base: Base<Node>,
+}
+
+impl You_forgot_the_attribute__godot_api for Thing {}
+
+impl INode for Thing {
+    fn process(&mut self) { // delta is missing
+        todo!()
+    }
+}

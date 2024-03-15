@@ -84,13 +84,15 @@ use crate::{callbacks, engine, out};
 /// [`Object`]: engine::Object
 /// [`RefCounted`]: engine::RefCounted
 #[repr(C)] // must be layout compatible with engine classes
-pub struct Gd<T: GodotClass> {
+pub struct Gd<T: GodotClass, O : ?Sized = dyn std::any::Any> {
     // Note: `opaque` has the same layout as GDExtensionObjectPtr == Object* in C++, i.e. the bytes represent a pointer
     // To receive a GDExtensionTypePtr == GDExtensionObjectPtr* == Object**, we need to get the address of this
     // Hence separate sys() for GDExtensionTypePtr, and obj_sys() for GDExtensionObjectPtr.
     // The former is the standard FFI type, while the latter is used in object-specific GDExtension engines.
     // pub(crate) because accessed in obj::dom
     pub(crate) raw: RawGd<T>,
+
+    _marker: std::marker::PhantomData<O>,
 }
 
 // Size equality check (should additionally be covered by mem::transmute())
@@ -584,7 +586,7 @@ impl<T: GodotClass> GodotType for Gd<T> {
         if raw.is_null() {
             Err(FromFfiError::NullRawGd.into_error(raw))
         } else {
-            Ok(Self { raw })
+            Ok(Self { raw, _marker: std::marker::PhantomData })
         }
     }
 
