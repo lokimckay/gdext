@@ -26,6 +26,27 @@ func test_to_string():
 	
 	assert_eq(str(ffi), "VirtualMethodTest[integer=0]")
 
+func test_float_conversions():
+	# float -> i32: not supported
+	var a = ConversionTest.accept_i32(123.45)
+	assert_eq(a, null)
+
+	# float -> f32: OK
+	var b = ConversionTest.accept_f32(123.45)
+	assert_eq(b, "123.45")
+
+	# int -> f32: OK
+	var c = ConversionTest.accept_f32(123)
+	assert_eq(c, "123")
+
+	# f32 -> float: OK
+	var d: float = ConversionTest.return_f32()
+	assert_eq(d, 123.45)
+
+	# f32 -> int: OK (tests GDScript)
+	var e: int = ConversionTest.return_f32()
+
+
 func test_export():
 	var obj = HasProperty.new()
 
