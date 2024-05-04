@@ -27,24 +27,44 @@ func test_to_string():
 	assert_eq(str(ffi), "VirtualMethodTest[integer=0]")
 
 func test_float_conversions():
-	# float -> i32: not supported
+	var dyn: Variant = ConversionTest.new() # enforce varcall
+
+	# float -> i32: GDScript converts implicitly, we can't prevent that on Rust side (even varcall).
+	# Only option would be to accept Variants all the time, but that's not acceptable perf-wise.
+	# Falling back to Variants in Debug mode is an option, but changes behavior.
 	var a = ConversionTest.accept_i32(123.45)
-	assert_eq(a, null)
+	assert_eq(a, 123, "ptrcall float -> i32")
+
+	var av = dyn.accept_i32(123.45)
+	assert_eq(av, 123, "varcall float -> i32")
 
 	# float -> f32: OK
 	var b = ConversionTest.accept_f32(123.45)
-	assert_eq(b, "123.45")
+	assert_eq(b, "123.45", "ptrcall float -> f32")
+
+	var bv = dyn.accept_f32(123.45)
+	assert_eq(bv, "123.45", "varcall float -> f32")
 
 	# int -> f32: OK
 	var c = ConversionTest.accept_f32(123)
-	assert_eq(c, "123")
+	assert_eq(c, "123", "ptrcall int -> f32")
+
+	var cv = dyn.accept_f32(123)
+	assert_eq(cv, "123", "varcall int -> f32")
 
 	# f32 -> float: OK
 	var d: float = ConversionTest.return_f32()
-	assert_eq(d, 123.45)
+	assert_eq(snapped(d, 0.01), 123.45, "ptrcall f32 -> float")
+
+	var dv: float = dyn.return_f32()
+	assert_eq(snapped(dv, 0.01), 123.45, "varcall f32 -> float")
 
 	# f32 -> int: OK (tests GDScript)
 	var e: int = ConversionTest.return_f32()
+	assert_eq(e, 123, "ptrcall f32 -> int")
+
+	var ev: int = dyn.return_f32()
+	assert_eq(ev, 123, "varcall f32 -> int")
 
 
 func test_export():
